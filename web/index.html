@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>sLogin</title>
+    <link href="style.css" id="applicationStylesheet" rel="stylesheet" type="text/css"/>
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="container">
+    <img id="logo" src="logo.png">
+
+    <div id="button">
+        <div id="text">
+            <span>JOUER</span>
+        </div>
+    </div>
+</div>
+<script>
+    var restartfunction = false;
+
+    $(function () {
+        $("#container").hide()
+
+        window.addEventListener('message', function (event) {
+            var edata = event.data;
+            if (edata.type === "show") {
+                if (edata.status == true) {
+                    restartfunction = false;
+                    $("#container").fadeIn();
+                    $("#container").show();
+                } else {
+                    restartfunction = true;
+                    $("#container").hide();
+                }
+            }
+        })
+
+        window.addEventListener('message', function (event) {
+            try {
+                switch (event.data.action) {
+                    case 'hidebutton':
+                        $("#button").hide()
+                        break;
+
+                    case 'showbutton':
+                        $("#button").show()
+                        break;
+                }
+            } catch (err) {
+            }
+        });
+
+        $("#button").click(function () {
+            $.post('https://sLogin/button', JSON.stringify({}));
+            return
+        })
+    })
+</script>
+</body>
+</html>
