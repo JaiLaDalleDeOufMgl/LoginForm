@@ -2,6 +2,11 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded',function(xPLayer)
+    ESX.PlayerData = xPlayer        
+end)
+
 AddEventHandler('esx:playerLoaded', function()
     CreateThread(function()
         ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin)
